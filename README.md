@@ -11,3 +11,5 @@ Python
 TensorFlow
 scikit-learn
 ipywidgets
+O/P :--->
+![image](https://github.com/user-attachments/assets/70c3cdea-3e97-4c15-b2b6-44e0df249bd1)
