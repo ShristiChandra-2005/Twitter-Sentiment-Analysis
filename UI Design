@@ -1,0 +1,32 @@
+# 5. Good UI with ipywidgets
+from ipywidgets import widgets, VBox, Layout
+from IPython.display import display, clear_output
+
+text_input = widgets.Textarea(
+    value='',
+    placeholder='Type a tweet here...',
+    description='Tweet:',
+    layout=Layout(width='90%', height='80px')
+)
+predict_btn = widgets.Button(description="Predict Sentiment", button_style='success')
+output = widgets.Output()
+
+def predict_sentiment(b):
+    with output:
+        clear_output()
+        tweet = text_input.value
+        if not tweet.strip():
+            print("Please enter a tweet.")
+            return
+        cleaned = clean_text(tweet)
+        pred = pipeline.predict([cleaned])[0]
+        sentiment = le.inverse_transform([pred])[0]
+        color = {'Positive': '#2ecc71', 'Negative': '#e74c3c', 'Neutral': '#f1c40f'}[sentiment]
+        display(widgets.HTML(
+            f"<div style='background-color:{color};color:white;padding:15px;border-radius:8px;font-size:20px;'>"
+            f"<b>Predicted Sentiment:</b> {sentiment}</div>"
+        ))
+
+predict_btn.on_click(predict_sentiment)
+ui = VBox([text_input, predict_btn, output])
+display(ui)
