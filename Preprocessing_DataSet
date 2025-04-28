@@ -1,0 +1,19 @@
+# 2. Preprocessing (no nltk, manual stopwords)
+def clean_text(text):
+    text = str(text).lower()
+    text = re.sub(r'http\S+', '', text)
+    text = re.sub(r'@\w+', '', text)
+    text = re.sub(r'#\w+', '', text)
+    text = re.sub(r'[^\w\s]', '', text)
+    tokens = text.split()
+    stop_words = set([
+        'the','a','an','is','it','this','that','to','for','of','and','in','on','at','with','as','by','from','was','were','be','been','are','am',
+        'i','you','he','she','they','we','my','your','his','her','their','our','me','him','them','us','do','does','did','so','but','if','or',
+        'because','about','into','through','after','over','under','again','further','then','once','here','there','when','where','why','how',
+        'all','any','both','each','few','more','most','other','some','such','no','nor','not','only','own','same','than','too','very','can',
+        'will','just','don','should','now'
+    ])
+    tokens = [w for w in tokens if w not in stop_words]
+    return ' '.join(tokens)
+train_df['clean_tweet'] = train_df['Tweet'].apply(clean_text)
+val_df['clean_tweet'] = val_df['Tweet'].apply(clean_text)
